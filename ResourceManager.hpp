@@ -6,17 +6,15 @@ class ResourceManager
 {
 public:
     
-    ResourceManager()
-    {   
-        Obj = new Resource;
-    }
+    ResourceManager() : Obj{new Resource} {}
     ResourceManager(const ResourceManager& kopia)
-    { 
-        //object = kopia.object;
-    }
+    {
+        Obj = new Resource(*kopia.Obj);
+    } 
     ResourceManager& operator=(const ResourceManager& przypisany)
     {
-        
+        delete Obj;
+        Obj = new Resource(*przypisany.Obj);
         return *this;
     }
     /* ResourceManager(ResourceManager&& przeniesiony)
@@ -38,3 +36,9 @@ public:
     Resource* Obj;
     // tu musi byæ dynamiczna alokacja
 };
+
+/*ResourceManager()
+    {   
+        Obj = new Resource;
+    }*/
+
