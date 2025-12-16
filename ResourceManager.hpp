@@ -17,11 +17,23 @@ public:
         Obj = new Resource(*przypisany.Obj);
         return *this;
     }
-    /* ResourceManager(ResourceManager&& przeniesiony)
+    ResourceManager(ResourceManager&& przeniesiony)
     { 
-        ResourceManager zwrot{std::move(przeniesiony)};
-        return zwrot;
-    } */
+        Obj = przeniesiony.Obj;
+        przeniesiony.Obj = nullptr;
+        //ResourceManager zwrot{std::move(przeniesiony)};
+        //return zwrot;
+    }
+    ResourceManager& operator=(ResourceManager&& przenKopia)
+    { 
+        if (this != &przenKopia)
+        {
+            delete Obj;
+            Obj = przenKopia.Obj;
+            przenKopia.Obj = nullptr;
+        }
+        return *this;
+    }
      ~ResourceManager()
     {
         delete Obj;
@@ -33,7 +45,7 @@ public:
     } 
 
 
-    Resource* Obj;
+    Resource* Obj = nullptr;
     // tu musi byæ dynamiczna alokacja
 };
 
